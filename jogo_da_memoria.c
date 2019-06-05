@@ -2,17 +2,65 @@
 #include <stdlib.h> // sleep()
 #include <time.h> // time()
 
-const char *moldecarta = ",---,\t,---,\t,---,\t,---,\n"
+
+// Tela inicial 
+
+void screen() {
+	system("echo [93m");
+	printf(
+"                       .-\"-.           \n"           
+"                    .-\"     \"-.       \n"            
+"                   /\"-.     .-|                   \n"
+"                  /    \"-.-\"  |                   \n"
+"                 /      /     |                   \n"
+"        .-\"-.   /      /      |       .-\"-.       \n"
+"     .-\"     \"-/      /       |    .-\"     \"-.    \n"
+"     |-.     .-\"\\    /        |   /\"-.     .-|    \n"
+"     |  '-.-\"    \\  /         | /'    \"-.-\"  |    \n"
+"     |     \\      \\/   .-\"-.  /'        |    |    \n"
+"     |      \\      \\.-\"     \"-.         |    |    \n"
+"     |       \\      |-.     .-\"\\        |    |    \n"
+"     |        \\     |  \"-.-\"    '\\      |    |    \n"
+"     |         \\    |    |        '\\    |    |    \n"
+"     |    |\\    \\   |    |          '\\  |    |    \n"
+"     |    | \\    \\  |    |            '\\|    |    \n"
+"     |    |  \\    \\ |    |    :\\.            |    \n"
+"     |    |   \\    \\|    |    |  \\.          |    \n"
+"     |    |    \\         |    |    \\.        |    \n"
+"     '-.  |  .-\"\\        |    |    '.\\.    .-'    \n"
+"        \"-|-\"    \\       |    |      \"-\\.-\"     \n"  
+"                  \\      |    |                   \n"
+"                   \\     |    |                   \n"
+"                    \"-.  |  .-'                   \n"
+"                       \"-|-\"\n"
+"\n Desenvolvido por Gilmar Silva !!!!!! \t\n"
+" Todos os direitos reservados (C) \t\n"
+" Bugs envie um issue para o projeto no github -> github.com/heavenh/jogo_3_uni_ufrn/issues \t\n"
+	);
+	sleep(2);
+	system("cls");                                     
+
+}
+
+/* Modelo das cartas */
+
+const char *moldecarta = "\n,---,\t,---,\t,---,\t,---,\n"
                          "| %c |\t| %c |\t| %c |\t| %c |\n"
                          "'---'\t'---'\t'---'\t'---'\n\n";
+
+/* Modelo das cartas Viradas */
 
 int cartasJogo[12] = {'?', '?', '?', '?',
                       '?', '?', '?', '?',
                       '?', '?', '?', '?'};
-
+                      
+/* Imprimir Fileira de Cartas */
 void imprimefileira(char letra1, char letra2, char letra3, char letra4) {
+	system("echo [96m");
     printf(moldecarta, letra1, letra2, letra3, letra4);
 }
+
+/* Atualizar as fileiras depois de ser vista  */
 
 void atualizafileiras() {
     system("cls");
@@ -22,20 +70,21 @@ void atualizafileiras() {
 }
 
 int main() {
+	screen();
     srand(time(NULL));
 
-    int i=0;
+    int i = 0;
 
-    int cartas[12];
-    int posicoes[6] = {0, 0, 0, 0, 0, 0};
-    char letras[] = { 'A', 'B', 'C', 'D', 'E', 'F' };
+    int cartas[12]; // Definindo quantas cartas quero no jogo
+    int posicoes[6] = {0, 0, 0, 0, 0, 0}; // as posi√ß√µes das cartas viradas
+    char letras[] = { 'A', 'B', 'C', 'D', 'E', 'F' }; // as letras para ser achada os pares
 
     for(; i<12; i++) {
         repete:
-        cartas[i] = rand()%6;
+        cartas[i] = rand() % 6;
 
-        // esse È um algoritmo de sort pra espalhar
-        // os pares aleatoriamente
+        /* esse √© um algoritmo de sort pra espalhar
+           os pares aleatoriamente */
         switch(cartas[i]) {
         case 0: if(posicoes[0]!=2) posicoes[0]++; else goto repete; break;
         case 1: if(posicoes[1]!=2) posicoes[1]++; else goto repete; break;
@@ -46,11 +95,17 @@ int main() {
         default: break;
         }
     }
+    
+    /* Imprimir as fileiras depois de ser informadas */
+    system("echo [32m");
+	printf("\nO jogo come√ßa em 3 segundos.. prepare-se !!!");
+	sleep(3);
+	system("cls");
 
     imprimefileira(letras[cartas[0]], letras[cartas[1]], letras[cartas[2]], letras[cartas[3]]);
     imprimefileira(letras[cartas[4]], letras[cartas[5]], letras[cartas[6]], letras[cartas[7]]);
     imprimefileira(letras[cartas[8]], letras[cartas[9]], letras[cartas[10]], letras[cartas[11]]);
-
+	
     sleep(6);
     unsigned int tentativa = 0, acertos = 0;
 
@@ -72,6 +127,8 @@ int main() {
 
     if ( num>48 ) num-=48;
 
+	/* Compara√ß√£o se as cartas s√£o iguais */
+
     if (((pos>=65 && pos<=67) || (pos>=97 && pos<=99))
        &&(num>=1 && num <=4 )) {
         tentativa++;
@@ -82,7 +139,7 @@ int main() {
         if ( pos == 'c' || pos == 'C' ) mpos=2;
 
         if ( cartasJogo[(mpos*4)+num-1] != '?' ) {
-            printf("Carta j· escolhida.\n");
+            printf("Carta j√° escolhida.\n");
             goto escolha;
         }
 
@@ -100,7 +157,7 @@ int main() {
             {
                 cartasJogo[(mpos*4)+num-1] = letras[cartas[(mpos*4)+num-1]];
                 atualizafileiras();
-                printf("Errou!\n");
+                printf("Errou Loko :P\n");
                 sleep(1);
 
                 cartasJogo[(mpos*4)+num-1] = '?';
@@ -117,13 +174,13 @@ int main() {
         goto escolha;
     }
     else {
-        printf("SeleÁ„o inv·lida!\n");
+        printf("Selecao invlida!\n");
         goto escolha;
     }
 
     fim:
     atualizafileiras();
-    printf("VocÍ completou em %d tentativas!\nObrigado por jogar.\n\n", tentativa+1);
+    printf("Voce completou em %d tentativas!\nObrigado por jogar.\n\n", tentativa+1);
 
     return 0;
 }
