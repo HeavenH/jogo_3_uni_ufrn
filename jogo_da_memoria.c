@@ -33,7 +33,7 @@ void screen() {
 "                   \\     |    |                   \n"
 "                    \"-.  |  .-'                   \n"
 "                       \"-|-\"\n"
-"\n Desenvolvido por Gilmar Silva !!!!!! \t\n"
+"\n Desenvolvido por Comunidade clener !!!!!! \t\n"
 " Todos os direitos reservados (C) \t\n"
 " Bugs envie um issue para o projeto no github -> github.com/heavenh/jogo_3_uni_ufrn/issues \t\n"
 	);
